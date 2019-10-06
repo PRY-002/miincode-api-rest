@@ -102,3 +102,14 @@ async function getUsuarioById(req, res){
         console.log(e);
     }
 }
+
+async function message(req, res){
+    try {
+        return res.json({
+            message: 'Welcome Miincode',
+            data: isPasswordMatch
+        });       
+    } catch (e) {
+        console.log(e);
+    }
+}
