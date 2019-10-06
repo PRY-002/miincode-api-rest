@@ -1,4 +1,5 @@
-const express, { json } = require('express');
+const express = require('express');
+const { json } = require('express');
 //import morgan from 'morgan';
 
 //Importing routes
@@ -18,5 +19,5 @@ app.use('/api/codigos', codigoRoutes);
 app.use('/api/usuarios',usuarioRoutes);
 
 
-
+module.exports = app;
 //export default app;

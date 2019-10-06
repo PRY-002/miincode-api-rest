@@ -75,3 +75,11 @@ async function createCodigo(req, res){
     }
   //  console.log(req.body);
 }
+
+module.exports={
+    getCodigos:getCodigos,
+    getCodigoByIdUser:getCodigoByIdUser,
+    getCodigoById:getCodigoById,
+    createCodigo:createCodigo
+    }
+    

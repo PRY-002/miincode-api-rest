@@ -1,6 +1,8 @@
-const Sequelize = require('sequelize');
-const {sequelize} = require ('../db/connect.mysql');
-
+//const Sequelize = require('sequelize');
+//const {sequelize} = require ('../db/connect.mysql');
+var db = require('../db/connect.mysql'),
+    sequelize = db.sequelize,
+    Sequelize = db.Sequelize;
 /*
 CREATE TABLE IF NOT EXISTS codigos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -14,33 +16,32 @@ CREATE TABLE IF NOT EXISTS codigos (
 );
 */
 const Codigos = sequelize.define('codigos', {
-    id:{
+    id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    usuarios_id:{
+    usuarios_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
     },
-    mensaje:{
-        type: Sequelize.TEXT
-    }, 
-    ruta_url:{
+    mensaje: {
         type: Sequelize.TEXT
     },
-    fec_creacion:{
+    ruta_url: {
         type: Sequelize.TEXT
-    }, 
-    fec_actualizacion:{
+    },
+    fec_creacion: {
         type: Sequelize.TEXT
-    },          
-    estado:{ // Disponible ?
+    },
+    fec_actualizacion: {
+        type: Sequelize.TEXT
+    },
+    estado: { // Disponible ?
         type: Sequelize.BOOLEAN
     }
-    
+
 }, {
-    schema: '',
-    timestamps: false
+    schema: '', timestamps: false
     }
-);
+)

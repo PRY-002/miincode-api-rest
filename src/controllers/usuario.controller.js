@@ -107,9 +107,17 @@ async function message(req, res){
     try {
         return res.json({
             message: 'Welcome Miincode',
-            data: isPasswordMatch
+            data: "sIPIRIRIIIIIIIIIIIIIIIII"
         });       
     } catch (e) {
         console.log(e);
     }
 }
+
+module.exports={
+    createUsuario:createUsuario,
+    getUsuarios:getUsuarios,
+    getUsuarioById:getUsuarioById,
+    findByCredentials:findByCredentials,
+    message:message
+    }

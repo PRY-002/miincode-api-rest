@@ -1,6 +1,8 @@
-const Sequelize = require('sequelize');
-const {sequelize} = require ('../db/connect.mysql');
-
+//const Sequelize = require('sequelize');
+//const {sequelize} = require ('../db/connect.mysql');
+var db = require('../db/connect.mysql'),
+    sequelize = db.sequelize,
+    Sequelize = db.Sequelize;
 /*
 -- DROP TABLE miincode.usuarios;
 CREATE TABLE IF NOT EXISTS usuarios (

@@ -1,15 +1,17 @@
-const {Router} = require('express');
-const router = Router();
-
+//const {Router} = require('express');
+//const router = Router();
+const express = require('express');
+const app = express()
 
 const {createUsuario, getUsuarios, getUsuarioById, findByCredentials, message} = require('../controllers/usuario.controller');
 
 // /api/projects/
-router.post('/create',  createUsuario);
-router.get('/list/', getUsuarios);
-router.get('/list/user/:id', getUsuarioById);
-router.post('/login', findByCredentials);
+app.post('/create',  createUsuario);
+app.get('/list/', getUsuarios);
+app.get('/list/user/:id', getUsuarioById);
+app.post('/login', findByCredentials);
 
-router.post('/verMessage', message);
+app.get('/verMessage', message);
 
+module.exports = app;
 //export default router;
