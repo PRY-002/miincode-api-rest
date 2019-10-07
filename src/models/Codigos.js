@@ -44,5 +44,5 @@ const Codigos = sequelize.define('codigos', {
 }, {
     schema: '', timestamps: false
     }
-)
+);
 module.exports = Codigos;

@@ -1,4 +1,4 @@
-const Usuarios = require('../models/Codigos');
+const Codigos = require('../models/Codigos');
 
 /* -------------------------------------------------------- */
 /* -------> GET ------------------------------------------- */
