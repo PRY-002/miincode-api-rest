@@ -10,14 +10,17 @@ async function getCodigos(req, res){
             data:listCodigos
         });
     }catch(e){
-        console.log(e);
+        res.status(400).json({
+            message: 'Error al intentar obtener la lista de codigos, '+ e,
+            estado: false
+        })
     }
 }
 
 // Lista los CODIGOS por Id de Usuario.
 async function getCodigoByIdUser(req, res){
-    try {
-        const { usuarios_id } = req.params;
+    const { usuarios_id } = req.params;
+    try {        
         const listCodigos = await Codigos.findAll({
             where: { usuarios_id }
         });
@@ -25,20 +28,26 @@ async function getCodigoByIdUser(req, res){
             data:listCodigos
         });
     } catch (e) {
-        console.log(e);
+        res.status(400).json({
+            message: 'Error al intentar obtener los codigos del idUser '+usuarios_id +', '+ e,
+            estado: false
+        })
     }
 }
 
 // Muestra Código por ID.
 async function getCodigoById(req, res){
-    try {
-        const { id } = req.params;
-           const project = await Codigos.findOne({
-                where:{ id }
-            });
-            res.json(project);        
+    const { id } = req.params;
+    try {        
+        const project = await Codigos.findOne({
+            where:{ id }
+        });
+        res.json(project);        
     } catch (e) {
-        console.log(e);
+        res.status(400).json({
+            message: 'Error al intentar obtener los codigos del '+usuarios_id +', '+ e,
+            estado: false
+        })
     }
 }
 
@@ -65,9 +74,8 @@ async function createCodigo(req, res){
             });
         }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: 'Error al intentar registrar, '+ error,
+        res.status(400).json({
+            message: 'Error al intentar registrar el codigo, '+ error,
             data: {
             }
         })

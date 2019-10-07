@@ -26,11 +26,9 @@ async function createUsuario(req, res){
             }
         }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
+        res.status(400).json({
             message: 'Error al intentar registrar, '+ error,
             estado: false
-            //data: {  }
         })
     }  
 
@@ -41,7 +39,7 @@ async function findByCredentials(req, res){
     try {
         let user = await  Usuarios.findOne({ where: { email: email, password: password }})
         if (!user) {
-            return res.status(401).json({message: 'Login failed! Check email or password authentication credentials'})
+            return res.status(401).json({message: 'Error login! Revisar las credenciales de autenticación, email o password incorrecto.'})
         }
       
         if (user){
@@ -50,13 +48,10 @@ async function findByCredentials(req, res){
                 data: user
             });
         }
-    } catch (error) {
-        console.log('ERROR: '+error);        
-        res.status(500).json({
-            message:'There was a problem finding the user.',
-            data: {
-
-            }
+    } catch (error) {           
+        res.status(400).json({
+            message:'Error Login.' + error,
+            estado: false
         })
     }   
 
@@ -70,20 +65,27 @@ async function getUsuarios(req, res){
             data:listUsuarios
         });
     } catch (e) {
-        console.log(e.message);
+        res.status(400).json({
+            message:'Error al obtener los usuarios. ' + e,
+            estado: false
+        })   
     }
 }
 
 // Muestra Usuario por ID.
 async function getUsuarioById(req, res){
+    const { id } = req.params;
+
     try {
-        const { id } = req.params;
-           const project = await Usuarios.findOne({
-                where:{ id }
-            });
-            res.json(project);        
+        const project = await Usuarios.findOne({
+            where:{ id }
+        });
+        res.json(project);        
     } catch (e) {
-        console.log(e);
+        res.status(400).json({
+            message:'Error al obtener el usuario.' +id + '- '+ error,
+            estado: false
+        })        
     }
 }
 
@@ -94,7 +96,10 @@ async function message(req, res){
             data: "La data del modelo Usuario esta actualizada"
         });       
     } catch (e) {
-        console.log(e);
+        res.status(400).json({
+            message:'Error al intentar mostrar el mensaje. '+ error,
+            estado: false
+        })                    
     }
 }
 
