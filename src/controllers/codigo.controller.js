@@ -67,9 +67,8 @@ async function createCodigo(req, res){
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: message: 'Error al intentar registrar, '+ error,
+            message: 'Error al intentar registrar, '+ error,
             data: {
-
             }
         })
     }
