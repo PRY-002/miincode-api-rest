@@ -28,7 +28,7 @@ async function createUsuario(req, res){
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: error,
+            message: 'Error al intentar registrar, '+ error,
             estado: false
             //data: {  }
         })
