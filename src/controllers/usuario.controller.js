@@ -28,7 +28,7 @@ async function createUsuario(req, res){
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message:'Algo va mal.',
+            message: error,
             estado: false
             //data: {  }
         })
