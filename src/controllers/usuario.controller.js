@@ -2,65 +2,52 @@ const Usuarios = require('../models/Usuarios');
 
 async function createUsuario(req, res){
 
-    const {uid, email, nombres, apepat, apemat, fec_nacimiento, genero, dni, url_foto, nro_movil, fec_creacion, fec_actualizacion, estado} = req.body;
-
+    const {uid, email, nombres, password, apepat, apemat, fec_nacimiento, genero, dni, url_foto, nro_movil, fec_creacion, fec_actualizacion, estado, perfiles_id} = req.body;
     try {
-        let newUsuario = await Usuarios.create({
-            uid,
-            email,
-            nombres,
-            apepat,
-            apemat, 
-            fec_nacimiento,
-            genero,
-            dni,
-            url_foto,
-            nro_movil,
-            fec_creacion,
-            fec_actualizacion,
-            estado
-        },{
-            fields:['uid','email','nombres','apepat','apemat', 'fec_nacimiento', 'genero', 'dni', 'url_foto', 'nro_movil', 'fec_creacion', 'fec_actualizacion', 'estado', 'perfiles_id']
-        });
-
-        if (newUsuario){
-            return res.json({
-                message: 'Usuario created successfully',
-                data: newUsuario
+        let userEmailExist = await  Usuarios.findOne({ where: { email: email}})
+        if (userEmailExist) {
+            return res.status(401).json({
+                message: 'El correo ingresado ya se encuentra registrado.',
+                estado: false
+                })
+        } else {
+            let newUsuario = await Usuarios.create({
+                uid, email, password, nombres, apepat, apemat, fec_nacimiento, genero, dni, url_foto, nro_movil, fec_creacion, fec_actualizacion, estado, perfiles_id
+            },{
+                fields:['uid','email','nombres','password','apepat','apemat', 'fec_nacimiento', 'genero', 'dni', 'url_foto', 'nro_movil', 'fec_creacion', 'fec_actualizacion', 'estado', 'perfiles_id']
             });
+    
+            if (newUsuario){
+                return res.json({
+                    message: 'Usuario creado satisfactoriamente.',
+                    estado: true
+                    //data: [newUsuario]
+                });
+            }
         }
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message:'Something goes wrong',
-            data: {
-
-            }
+            message:'Algo va mal.',
+            estado: false
+            //data: {  }
         })
-    }
-
-  //  console.log(req.body);
-   
+    }  
 
 }
 
 async function findByCredentials(req, res){
     const {email, password} = req.body;
     try {
-        let user = await  Usuarios.findOne({ where: { email: email}})
+        let user = await  Usuarios.findOne({ where: { email: email, password: password }})
         if (!user) {
-            return res.status(401).json({message: 'Login failed! Check email authentication credentials'})
-        }
-        //const isPasswordMatch = await bcrypt.compare(password, user.password)
-        let isPasswordMatch = await  Usuarios.findOne({ where: { password: password}})
-        if (!isPasswordMatch) {
-            return res.status(401).json({message: 'Login failed! Check password authentication credentials'})
+            return res.status(401).json({message: 'Login failed! Check email or password authentication credentials'})
         }
       
         if (user){
             return res.json({
                 message: 'Usuario autenticado exitosamente.',
-                data: isPasswordMatch
+                data: user
             });
         }
     } catch (error) {
@@ -71,10 +58,7 @@ async function findByCredentials(req, res){
 
             }
         })
-    }
-
-  //  console.log(req.body);
-   
+    }   
 
 }
 
@@ -107,7 +91,7 @@ async function message(req, res){
     try {
         return res.json({
             message: 'Welcome Miincode',
-            data: "sIPIRIRIIIIIIIIIIIIIIIII"
+            data: "La data del modelo Usuario esta actualizada"
         });       
     } catch (e) {
         console.log(e);
