@@ -59,13 +59,13 @@ async function findByCredentials(req, res){
 }
 
 async function findByEmail(req, res){
-    const {email} = req.body;
+    const { email } = req.params;
     try {
-        let user = await  Usuarios.findOne({ where: { email: email }})
+        const user = await  Usuarios.findOne({ where: { email }})
+      //  res.json(user);
         if (!user) {
-            return res.status(401).json({message: 'Error! No se encontro datos con el email enviado.'})
-        }
-      
+            return res.status(403).json({message: 'Error! No se encontro datos con el email enviado.'})
+        }      
         if (user){
             return res.json({
                 message: 'Email encontrado.',
@@ -74,7 +74,7 @@ async function findByEmail(req, res){
         }
     } catch (error) {           
         res.status(400).json({
-            message:'Error Login.' + error,
+            message:'Error Search. \n' + email + '-' + error,
             estado: false
         })
     }   
@@ -101,13 +101,11 @@ async function getUsuarioById(req, res){
     const { id } = req.params;
 
     try {
-        const project = await Usuarios.findOne({
-            where:{ id }
-        });
+        const project = await Usuarios.findOne({ where:{ id }});
         res.json(project);        
     } catch (e) {
         res.status(400).json({
-            message:'Error al obtener el usuario.' +id + '- '+ error,
+            message:'Error al obtener el usuario.' +id + '- '+ e,
             estado: false
         })        
     }

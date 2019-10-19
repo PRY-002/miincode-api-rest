@@ -7,8 +7,8 @@ const {createUsuario, getUsuarios, getUsuarioById, findByCredentials,findByEmail
 app.post('/create',  createUsuario);
 app.get('/list/', getUsuarios);
 app.get('/list/user/:id', getUsuarioById);
+app.get('/search/:email', findByEmail);
 app.post('/login', findByCredentials);
-app.post('/search_email', findByEmail);
 
 app.get('/verMessage', message);
 
