@@ -34,6 +34,7 @@ async function createUsuario(req, res){
 
 }
 
+
 async function findByCredentials(req, res){
     const {email, password} = req.body;
     try {
@@ -45,6 +46,29 @@ async function findByCredentials(req, res){
         if (user){
             return res.json({
                 message: 'Usuario autenticado exitosamente.',
+                data: user
+            });
+        }
+    } catch (error) {           
+        res.status(400).json({
+            message:'Error Login.' + error,
+            estado: false
+        })
+    }   
+
+}
+
+async function findByEmail(req, res){
+    const {email} = req.body;
+    try {
+        let user = await  Usuarios.findOne({ where: { email: email }})
+        if (!user) {
+            return res.status(401).json({message: 'Error! No se encontro datos con el email enviado.'})
+        }
+      
+        if (user){
+            return res.json({
+                message: 'Email encontrado.',
                 data: user
             });
         }
@@ -108,5 +132,6 @@ module.exports={
     getUsuarios:getUsuarios,
     getUsuarioById:getUsuarioById,
     findByCredentials:findByCredentials,
+    findByEmail:findByEmail,
     message:message
     }

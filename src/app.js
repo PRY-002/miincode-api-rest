@@ -5,6 +5,7 @@ const { json } = require('express');
 //Importing routes
 const codigoRoutes = require('./routes/codigos');
 const usuarioRoutes = require('./routes/usuarios');
+const cloudRoutes = require('./routes/cloud');
 
 //Initialization
 const app = express();
@@ -17,7 +18,8 @@ app.use(json());
 app.use('/api/codigos', codigoRoutes);
 // Usuarios
 app.use('/api/usuarios',usuarioRoutes);
+// Cloud
+app.use('/api/cloud',cloudRoutes);
 
 
 module.exports = app;
-//export default app;
