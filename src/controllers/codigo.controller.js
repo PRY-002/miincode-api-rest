@@ -83,8 +83,33 @@ async function createCodigo(req, res){
   //  console.log(req.body);
 }
 
+async function deleteCodigoById(req, res){
+    const { id } = req.params;
+    try {
+        const user = await  Codigos.findOne({ where: { id }})
+      //  res.json(user);
+        if (!user) {
+            return res.status(403).json({message: 'Error! No se encontro datos con el ID enviado.'})
+        } else {
+            let deleteCodigo = await Codigos.destroy( { where: { id:id }} ).then();
+            if (deleteCodigo) {
+                return res.json({
+                    message: 'Codigo eliminado satisfactioriamente.',
+                    estado: true
+                });
+            }
+        }
+    } catch (error) {           
+        res.status(400).json({
+            message:'Error Delete. \n[' + id + '] - ' + error,
+            estado: false
+        })
+    } 
+}
+
 module.exports={
     getCodigos:getCodigos,
+    deleteCodigoById:deleteCodigoById,
     getCodigoByIdUser:getCodigoByIdUser,
     getCodigoById:getCodigoById,
     createCodigo:createCodigo
